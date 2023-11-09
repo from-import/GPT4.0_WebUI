@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Flask App</title>
+    <style>
+        /* Add your CSS styles here */
+        #resultText {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+            white-space: pre-line; /* Preserve line breaks */
+        }
+    </style>
+</head>
+<body>
+    <h1>ChatGPT 4.0 FreeAPI</h1>
+    <p>请在文本框输入内容,然后点击提交按钮</p>
+
+    <input type="text" id="inputText" placeholder="Enter input text">
+    <button id="submitButton">提交</button>
+
+    <h2>Result:</h2>
+    <div id="resultText"></div>
+
+    <script>
+        document.getElementById('submitButton').addEventListener('click', function () {
+            var inputText = document.getElementById('inputText').value;
+            if (inputText) {
+                fetch('/process', {
+                    method: 'POST',
+                    body: inputText
+                })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('resultText').textContent = data;
+                })
+                .catch(error => {
+                    document.getElementById('resultText').textContent = "An error occurred. Please try again.";
+                });
+            } else {
+                document.getElementById('resultText').textContent = "Please enter some text.";
+            }
+        });
+    </script>
+</body>
+</html>
+
